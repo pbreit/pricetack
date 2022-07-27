@@ -1,0 +1,32 @@
+<h3>{{=status.title()}} Orders</h3>
+
+<table width=100%>
+    <thead>
+        <tr>
+            <th></th>
+            <th class="ttl">Description</th>
+            <th class="ttl">Date</th>
+            <th class="prc">Total</th>
+        </tr>
+    </thead>
+    <tbody>
+    {{if not orders:}}
+        <tr><td colspan=4 align=middle><br>No orders</td></tr>
+    {{else:}}
+        {{for order in orders:}}
+        <tr>
+            <td>
+            {{if len(order.item.image)==0:}}
+                <a href="{{=URL('default', 'item', extension='', args=order.item.id)}}")><img src="{{=URL('static','images/no-photo.png')}}" width="80"></a>
+            {{else:}}
+                <a href="{{=URL('default', 'item', extension='', args=order.item.id)}}")><img src="{{=URL('static','uploads', extension='', args=order.item.image)}}" width="80"></a>
+            {{pass}}
+            </td>
+            <td class="ttl"><a href="{{=URL('default', 'item', extension='', args=order.item.id)}}">{{=order.item.title}}</a></td>
+            <td class="ttl">{{=short_date(order.purchase.created_on)}}</td>
+            <td class="prc"><a href="{{=URL('manage', 'order', extension='', args=order.purchase.id)}}">{{=order.item.currency_symbol}} {{=order.purchase.amount}}</a></td>
+        </tr>
+        {{pass}}
+    {{pass}}
+    </tbody>
+</table>

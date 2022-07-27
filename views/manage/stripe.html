@@ -1,0 +1,14 @@
+{{extend 'layout.html'}}
+
+<h2>Stripe Information</h2>
+{{if len(form)>0:}}
+    <div id="user_form">
+        {{=form.custom.begin}}
+        <p><label for="auth_service_token" id="auth_service_token__label">API Key: </label><br>
+        {{=form.custom.widget.token}}</p>
+        <p><input type="submit" value="save key" /></p>
+        {{=form.custom.end}}
+    </div>
+{{else:}}
+    Pricetack supports <a href="http://stripe.com">Stripe</a>.
+{{pass}}

@@ -1,0 +1,7 @@
+{{extend 'layout.html'}}
+
+{{if request.args(0)=='return':}}
+    Ebay Name: {{=screen_name}}
+{{else:}}
+    <a href="{{=URL('connect', 'ebay', args='authorize')}}">Authorize Ebay</a>
+{{pass}}

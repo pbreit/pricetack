@@ -1,0 +1,103 @@
+{{extend 'layout.html'}}
+
+    <div id="user_form"> 
+        <form  action="/search" method="get"> 
+        <p><label for="query">Search: </label>
+        <input class="query" id="query" name="q" type="input" value="{{=request.vars.q or ''}}" />
+        <input type="submit" value="go" /></p> 
+        </form> 
+    </div> 
+
+{{if items:}}
+
+{{if request.vars.format=='list':}}
+    <span>{{include './html/sort_options.html'}}</span>
+    <span class="grid-or-list">
+        {{request.get_vars.format = 'grid'}}
+        <a href="{{=URL(request.args(0), request.args(1), extension='', vars=request.get_vars)}}">grid</a> | <strong>list</strong>
+        {{request.get_vars.format = 'list'}}
+    </span>
+    <table width="100%">
+        <thead>
+            <tr>
+                <th class="img"></th>
+                <th class="ttl">Description</th>
+                <th class="prc">Current Price</th>
+                <th class="prc">Final Price</th>
+            </tr>
+        </thead>
+        <tbody>
+        {{if len(items)==0:}}
+            <tr><td colspan=4 align=middle><br>No items</td></tr>
+        {{else:}}
+            {{for i,item in enumerate(items):}}
+            {{if i==count: break}}
+            <tr>
+                <td class="img">
+                    <a href="{{=URL('default', 'item', extension='', args=item.slug)}}" target="_top">
+                    {{if item.image_thumb:}}
+                        <img src="{{=URL('static', 'uploads', extension='', args=item.image_thumb)}}" height="80">
+                    {{else:}}
+                        <img src="{{=URL('static', 'images/no-photo.png')}}" width="80">
+                    {{pass}}</a>
+                </td>
+                <td class="ttl"><a href="{{=URL('default', 'item', extension='', args=item.slug)}}" target="_top">{{=item.title}}</a></td>
+                <td class="prc"><span class="current-prc">{{=item.currency_symbol}}{{=item.current_price}}</span></td>
+                <td class="prc"><span class="future-prc">{{=item.currency_symbol}}{{=item.last_price}} on {{=item.last_date}}</span></td>
+            </tr>
+            {{pass}}
+        {{pass}}
+        </tbody>
+    </table>
+{{else:}}
+    <span>{{include './html/sort_options.html'}}</span>
+    <span class="grid-or-list">
+        {{request.get_vars.format = 'list'}}
+        <strong>grid</strong> | <a href="{{=URL(request.args(0), request.args(1), extension='', vars=request.get_vars)}}">list</a>
+        {{request.get_vars.format = 'grid'}}
+    </span>
+    <table width="100%"><tr><td>
+    {{if len(items)==0:}}
+        No items
+    {{else:}}
+        <ul class="listings">
+        {{for i, item in enumerate(items):}}
+            {{if i==count: break}}
+            <li class="listing-card">
+            <p class="grid-img">
+            <a href="{{=URL('default', 'item', extension='', args=item.slug)}}" target="_top">
+            {{if item.image_thumb:}}
+                <img src="{{=URL('static', 'uploads', extension='', args=item.image_thumb)}}">
+            {{else:}}
+                <img src="{{=URL('static', 'images/no-photo.png')}}" width="176">
+            {{pass}}</a></p>
+            <p class="grid-ttl"><a href="{{=URL('default', 'item', extension='', args=item.slug)}}" target="_top">{{=item.title[:50]}}</a></p>
+            <p class="grid-prc"><table width="100%"><tr><td><span class="current-prc">{{=item.currency_symbol}}{{=item.current_price}}</span><br></td>
+            <td style="text-align:right;">{{if not item.hide_schedule:}}<a class="future-prc" href="#thumb" style="border-bottom:1px dotted;">{{=item.currency_symbol}}{{=item.last_price}} on {{=item.last_date}}<span><strong>Price reductions until sold:</strong><br>
+            {{if len(item.prices)==0:}}
+                Final Price
+            {{else:}}
+                {{for i in range(item.current_period+1, len(item.prices)):}}
+                    {{if i > 1:}}<br>{{pass}}
+                    {{=item.currency_symbol}}{{=item.prices[i]['amt']}} on <i>{{=item.prices[i]['long_date']}}</i>
+                {{pass}}
+            {{pass}}</span></a>{{pass}}</td></tr></table></p>
+        {{pass}}
+        </ul>
+        </td></tr></table>
+    {{pass}}
+    
+{{pass}}
+
+<center>
+{{if page-1:}}
+{{request.get_vars.page = int(page)-1}}
+<a href="{{=URL(request.args(0), request.args(1), extension='', vars=request.get_vars)}}">&lt;prev&nbsp;&nbsp;&nbsp;</a>
+{{pass}}
+
+{{if len(items)>count:}}
+{{request.get_vars.page = int(page)+1}}
+<a href="{{=URL(request.args(0), request.args(1), extension='', vars=request.get_vars)}}">next&gt;</a>
+{{pass}}
+</center>
+{{pass}}

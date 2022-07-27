@@ -1,0 +1,21 @@
+{{extend 'layout.html'}}
+
+<h2>Checkout</h2>
+<div class="span-14 last">
+    {{=LOAD('components', 'order_summary.load', args=item_id, ajax=False)}}
+    <div class="checkout-with-paypal-btn">
+        <a href="{{=URL('checkout', 'cancel', args=item_id)}}">cancel</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        {{if payment_method=='stripe':}}
+            <a class="btn" href="{{=URL('checkout', 'stripe')}}">checkout with credit card</a>
+        {{elif payment_method=='google':}}
+            <a class="btn" href="{{=URL('google', 'start')}}">checkout with google</a>
+        {{elif payment_method=='balanced':}}
+            <a class="btn" href="{{=URL('checkout', 'balanced')}}">checkout with credit card</a>
+        {{else:}}
+            <a class="btn" href="{{=URL('checkout', 'paypal', args='start')}}">checkout with paypal</a>
+        {{pass}}
+    </div>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+</div>
+<script>mpmetrics.track("Checkout");</script>

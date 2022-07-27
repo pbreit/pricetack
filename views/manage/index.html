@@ -1,0 +1,8 @@
+{{extend 'layout_manage.html'}}
+
+{{block title}}
+<h2>Seller Dashboard</h2>
+{{end}}
+
+{{=LOAD('components', 'manage_orders.load', args='new', ajax=False)}}
+{{=LOAD('components', 'manage_items.load', args='active', ajax=False)}}

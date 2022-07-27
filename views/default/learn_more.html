@@ -1,0 +1,40 @@
+{{extend 'layout.html'}}
+
+{{if auth.user:}}
+<h1>Congratulations!</h1>
+{{else:}}
+<h1>Learn More</h1>
+{{pass}}
+<div class="span-6">
+    <h3>Prices Go Down</h3>
+    <p>Pricetack offers a unique selling format: falling price schedule. Sellers specify a start price and a series of decreases. The price of an item will decline until it is sold.</p>
+</div>
+<div class="span-6">
+    <h3>Listing Is Fast and Free</h3>
+    <p>Listing on Pricetack is free and only takes a few moments. Don't fear, you can update your item information and price schedule later.</p>
+</div>
+<div class="span-6" last>
+    <h3>Payments Through PayPal</h3>
+    <p>Online payments are handled by PayPal. Buyers pay directly to a seller's PayPal account. Pricetack will send both the buyer and seller emails when items are purchased and shipped.</p>
+</div>
+<div class="span-18" last><p>&nbsp;</p></div>
+<div class="span-6">
+    <h3>Customize Your Store</h3>
+    <p>Create a custom header and URL so your Pricetack store fits in with your existing store. For example: <a href="http://cheekob.pricetack.com">cheekob.pricetack.com</a>.</p>
+</div>
+<div class="span-6">
+    <h3>Posting on Google &amp; Bing</h3>
+    <p>Pricetack will automatically send your product information to Google and Bing. More to come.</p>
+</div>
+<div class="span-6" last>
+    <h3>Engage Buyers</h3>
+    <p>Buyers are encouraged to watchlist your items so they can track price changes.</p>
+</div>
+<div class="span-18" last><p>&nbsp;</p></div>
+<div class="span-18" last><center>
+    {{if auth.user:}}
+    <h3>ready to sell?&nbsp;&nbsp;&nbsp;<a class="btn cta-btn" href="{{=URL('manage', 'item')}}">&nbsp;list an item now&nbsp;</a></h3>
+    {{else:}}
+    <h3><a class="btn cta-btn" href="{{=URL('default', 'user', args='register')}}">&nbsp;try it now free&nbsp;</a></h3>
+    {{pass}}</center></div>
+<div class="span-18" last><p>&nbsp;</p></div>

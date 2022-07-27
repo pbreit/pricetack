@@ -1,0 +1,15 @@
+.DS_Store
+Thumbs.db
+*.bak
+*.pyc
+*.pyo
+*.bak
+*.table
+cache/*
+databases/*
+errors/*
+logs/*
+private/*
+sessions/*
+uploads/*
+1_settings.py

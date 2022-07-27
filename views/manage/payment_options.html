@@ -1,0 +1,9 @@
+{{extend 'layout.html'}}
+
+<h2>Credit Card Processing Information</h2>
+{{if auth_service:}}
+    <p>Credit Card Processing Status: active [<a href="{{=URL('ebay', 'unlink')}}">deactivate</a>]<br>
+        Username: {{=auth_service.username}}</p>
+{{else:}}
+    <p><a href="{{=URL('manage', 'payment_options', args='setup')}}">setup credit card processing</a><p>
+{{pass}}

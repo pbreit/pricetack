@@ -1,0 +1,35 @@
+<h3>{{=status.title()}} Items</h3>
+
+<table width=100%>
+    <thead>
+        <tr>
+            <th></th>
+            <th class="ttl">Description</th>
+            <th class="ctr">Views</th>
+            <th class="prc">Current Price</th>
+            <th class="prc">Final Price</th>
+        </tr>
+    </thead>
+    <tbody>
+    {{if not items:}}
+        <tr><td colspan=4 align=middle><br>No items</td></tr>
+    {{else:}}
+        {{for item in items:}}
+        <tr>
+            <td>
+            {{if item.item.image:}}
+                <a href="{{=URL('default', 'item', extension='', args=item.item.id)}}")><img src="{{=URL('static','uploads', extension='', args=item.item.image_thumb)}}" width="80"></a>
+            {{else:}}
+                <a href="{{=URL('default', 'item', extension='', args=item.item.id)}}")><img src="{{=URL('static','images/no-photo.png')}}" width="80"></a>
+            {{pass}}
+            </td>
+            <td class="ttl"><a href="{{=URL('default', 'item', extension='', args=item.item.id)}}">{{=item.item.title}}</a>
+            {{if item.listing.id:}}<a href="http://cgi.ebay.com/{{=item.listing.ref_id}}"><img src="//p.ebaystatic.com/aw/pics/logos/logoEbay_x45.gif" height="10"></a>{{pass}}</td>
+            <td class="ctr">{{=item.item.views}}</td>
+            <td class="prc"><b>{{=item.item.currency_symbol}}{{=item.item.current_price}}</b></td>
+            <td class="prc">{{=item.item.currency_symbol}}{{=item.item.last_price}} on {{=item.item.last_date}}</td>
+        </tr>
+        {{pass}}
+    {{pass}}
+    </tbody>
+</table>

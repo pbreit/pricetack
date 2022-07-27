@@ -1,0 +1,11 @@
+<div class="panel">
+<h5>Categories</h5>
+<ul>
+    <li><a href="{{=URL('default', 'items', extension='')}}">All</a>
+    {{for grouping in groupings:}}
+        {{if grouping:}}
+            <li><a href="{{=URL('default', 'items', extension='', vars={'grouping': grouping.grouping})}}">{{=grouping.grouping.title()}}</a></li>
+        {{pass}}
+    {{pass}}
+</ul>
+</div>

@@ -1,0 +1,26 @@
+{{extend 'layout.html'}}
+
+<style type="text/css">
+#no_table_msg_type {display: none}
+</style>
+
+<h2>Contact Seller</h2>
+
+<div id="user_form">
+    {{=form.custom.begin}}
+    <p><label for="to">To</label><br>
+    {{if seller:}}
+        {{=seller}}
+    {{else:}}
+        Item Seller
+    {{pass}}</p>
+    <p><label for="subject">Subject</label><br>
+    {{=subject}}</p>
+    <p><label for="message">Message</label><br>
+    {{=form.custom.widget.message}}</p>
+    <p><label for="reply-to">Email Address</label><br>
+    {{=form.custom.widget.reply_to}}</p>
+    <p>{{=form.custom.widget.msg_type}}</p>
+    <p><input type="submit" value="send email" /></p>
+    {{=form.custom.end}}
+</div>

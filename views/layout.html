@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<!--[if (gt IE 9)|!(IE)]><!--> <html class="no-js" lang="{{=T.accepted_language or 'en'}}"> <!--<![endif]-->
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>{{=response.title or request.application}}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {{block head_extension}}{{end}}
+    <link rel="shortcut icon" href="{{=URL('static','favicon.ico')}}" type="image/x-icon">
+    <link rel="apple-touch-icon" href="{{=URL('static','favicon.png')}}">
+    <link rel="stylesheet" media="handheld" href="{{=URL('static','css/handheld.css')}}">
+    <script data-cfasync="true" src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+    <link rel="stylesheet" href="{{=URL('static', 'css/blueprint/screen.css')}}" type="text/css" media="screen, projection">
+    <link rel="stylesheet" href="{{=URL('static', 'css/blueprint/screen.css')}}" type="text/css" media="print">
+    <!--[if lt IE 8]><link rel="stylesheet" href="{{=URL('static', 'css/blueprint/ie.css')}}" type="text/css" media="screen, projection"><![endif]-->
+
+    {{
+        response.files.append(URL('static','js/javascript.js'))
+        response.files.append(URL('static','css/styles.css'))
+    }}
+
+    {{include 'web2py_ajax.html'}}
+
+  </head>
+<body>
+
+<div class="stripe"></div>
+
+<div class="flash">{{=response.flash or ''}}</div><!-- flash response -->
+
+<div class="container">
+	<div class="header span-24 last"><!-- header -->
+		{{block header}} <!-- this is default header -->
+      {{=page_header()}}
+    {{end}}
+	</div>
+	<div class="span-4"><!-- left sidebar -->
+        <div id="nav"><ul>
+        <li><a href="{{=URL('default', 'index')}}">home</a></li>
+        <li><a href="{{=URL('default', 'items')}}">browse items</a></li>
+        <li><a href="{{=URL('watchlist', 'index')}}">watch list</a></li>
+        {{if auth.user:}}
+            <li><a href="{{=URL('manage','index')}}">seller dashboard</a>
+            <li>{{if auth.user.name:}}<a href="http://{{=auth.user.name}}.pricetack.com">
+                {{else:}}<a href="{{=URL('default', 'items', vars={'seller': auth.user.id})}}">
+                {{pass}}storefront</a>
+            <li><a href="{{=URL('manage','item')}}">sell an item</a>
+        {{pass}}
+        </ul></div>
+        {{block left_sidebar}}
+        {{end}}
+	</div>
+	<div class="span-20 last"><!-- main -->
+		{{include}}
+	</div>
+	<div class="footer span-24 last"><!-- footer -->
+	    © 2016 <a href="http://pricetack.com">Pricetack</a>&nbsp;&nbsp;&nbsp;&nbsp;
+	    <a href="http://pricetack.com/about">about</a>&nbsp;&nbsp;&nbsp;&nbsp;
+	    <a href="http://pricetack.com/terms">terms</a>&nbsp;&nbsp;&nbsp;&nbsp;
+	    <a href="http://pricetack.com/privacy">privacy</a>&nbsp;&nbsp;&nbsp;&nbsp;
+	    <a href="http://pricetack.com/support">support</a>&nbsp;&nbsp;&nbsp;&nbsp;
+	    <a href="mailto:contact@pricetack.com">email us</a>&nbsp;&nbsp;&nbsp;&nbsp;
+        <a href="sms:4157636078">text us</a>
+        <div class="grid-or-list">
+            <div class="fb-like" data-href="http://facebook.com/pricetack" data-layout="button_count" data-action="like" data-show-faces="false" data-share="false"></div>
+            &nbsp;&nbsp;
+            <g:plusone></g:plusone>
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            <a href="https://www.paypal.com/us/mrb/pal=B3M7VBWJNY7AC"><img src="{{=URL('static', 'images/payment-options.png')}}" height="35" width="148"></a>
+        </div>
+    </div>
+
+</div><!-- container -->
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+
+<!-- Google Analytics -->
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-21594089-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+<!-- Google Plus -->
+<script src="https://apis.google.com/js/platform.js" async defer></script>
+
+<!-- Facebook -->
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.5&appId=232948093385320";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+<!-- LocalizeJS
+<script src="https://global.localizecdn.com/localize.js"></script>
+<script>!function(a){if(!a.Localize){a.Localize={};for(var e=["translate","untranslate","phrase","initialize","translatePage","setLanguage","getLanguage","detectLanguage","getAvailableLanguages","untranslatePage","bootstrap","prefetch","on","off"],t=0;t<e.length;t++)a.Localize[e[t]]=function(){}}}(window);</script>
+<script>
+ Localize.initialize({
+  key: 'v1brWnjdWCJBX',
+  rememberLanguage: true
+ });
+</script>
+-->
+
+<!-- transifex -->
+<script type="text/javascript">window.liveSettings={api_key:"0df7a501c2794cf7b85ba2e66bb53f8e"}</script>
+<script type="text/javascript" src="//cdn.transifex.com/live.js"></script>
+<!-- end transifex -->
+
+<p>{{if request.is_local:}}{{=response.toolbar()}}{{pass}}</p>
+
+  </body>
+</html>

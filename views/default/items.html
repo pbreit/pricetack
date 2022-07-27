@@ -1,0 +1,14 @@
+{{extend 'layout.html'}}
+
+{{block left_sidebar}}
+    <p>&nbsp;</p>
+    <div class="groupings">
+        {{=LOAD('components', 'item_groupings.load', ajax=False)}}
+    </div>
+{{end}}
+
+{{if (request.vars.grouping and len(request.vars.grouping)>0):}}
+    <h3>Category: {{=request.vars.grouping}}</h3>
+{{pass}}
+
+{{=LOAD('components', 'item_filter.load', args=[request.controller, request.function], vars=request.get_vars, ajax=False)}}

@@ -1,0 +1,10 @@
+Sitemap: http://pricetack.com/sitemap.xml
+
+User-agent: *
+Disallow: /components/
+Disallow: /checkout/
+Disallow: /error/
+Disallow: /manage/
+Disallow: /watchlist/
+Disallow: /contact-seller/
+Disallow: /user/

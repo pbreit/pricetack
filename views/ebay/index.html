@@ -1,0 +1,9 @@
+{{extend 'layout.html'}}
+
+<h2>Ebay Information</h2>
+{{if auth_service:}}
+<p>Ebay Status: linked [<a href="{{=URL('ebay', 'unlink')}}">unlink</a>]<br>
+Ebay Username: {{=auth_service.username}}</p>
+{{else:}}
+<p><a href="{{=URL('ebay', 'link')}}">link ebay account</a><p>
+{{pass}}

@@ -1,0 +1,20 @@
+{{extend 'layout_embed.html'}}
+
+<ul class="listings embed">
+    <li class="buttons">
+        {{if page:}}
+        <a id="prev" href="{{=URL(vars={'seller': request.vars.seller, 'page': page-1})}}"> </a>
+        {{pass}}
+    </li>
+
+    {{for i, item in enumerate(items):}}
+        {{if i==count: break}}
+        {{include 'html/item_box.html'}}
+    {{pass}}
+
+    <li class="buttons">
+        {{if len(items)>count:}}
+        <a id="next" href="{{=URL(vars={'seller': request.vars.seller, 'page': page+1})}}"> </a>
+        {{pass}}
+    </li>
+</ul>

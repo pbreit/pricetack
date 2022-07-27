@@ -1,0 +1,16 @@
+{{extend 'layout.html'}}
+
+<h2>Teamworx</h2>
+<div id="user_form">
+    {{=form.custom.begin}}
+    <p><label for="auth_user_email" id="auth_user_email__label">Email: </label><br>
+    {{=form.custom.widget.email}}</p>
+    <p><input type="submit" value="find" /></p>
+    {{=form.custom.end}}
+</div>
+<hr>
+{{if users:}}
+    {{for user in users:}}
+        <a href="/teamworx/impersonate?user_id={{=user.id}}">{{=user.email}}</a><br>
+    {{pass}}
+{{pass}}

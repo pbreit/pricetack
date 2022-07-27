@@ -1,0 +1,14 @@
+<li class="listing-card">
+    <p class="grid-img">
+    <a href="{{=URL('default', 'item', extension='', args=item.item.slug)}}" target="_top">
+    {{if item.item.image_thumb:}}
+        <img src="{{=URL('static', 'uploads', extension='', args=item.item.image_thumb)}}">
+    {{else:}}
+        <img src="{{=URL('static', 'images/no-photo.png')}}" width="176">
+    {{pass}}</a></p>
+    <p class="grid-ttl"><a href="{{=URL('default', 'item', extension='', args=item.item.slug)}}" target="_top">{{=item.item.title[:50]}}</a></p>
+    <p class="grid-prc"><table width="100%"><tr><td><span class="current-prc">{{=item.item.currency_symbol}}{{=item.item.current_price}}</span><br></td>
+    <td style="text-align:right;">
+    {{if not item.item.hide_schedule:}}<a class="future-prc" href="#thumb" style="border-bottom:1px dotted;">{{=item.item.currency_symbol}}{{=item.item.last_price}} on {{=item.item.last_date}}<span>{{include './html/schedule.html'}}</span></a>{{pass}}
+    </td></tr></table></p>
+</li>

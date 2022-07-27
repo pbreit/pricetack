@@ -1,0 +1,41 @@
+{{if item:}}
+{{item_amount = (purchase.item_amount if purchase else item.current_price)}}
+    <table class="order_summary">
+        <tr>
+            <th class="ttl">Description</th>
+            <th class="prc">Price</th>
+            <th class="prc">Qty</th>
+            <th class="prc">Amount</th>
+            <th></th>
+        </tr>
+        <tr>
+            <td class="ttl">{{=item.title}}</td>
+            <td class="prc">{{=item.currency_symbol}}{{=item_amount}}</td>
+            <td class="prc">{{=item.quantity}}</td>
+            <td class="prc">{{=item.currency_symbol}}{{=item_amount}}</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td class="prc">Shipping</td>
+            <td class="prc">{{=item.currency_symbol}}{{=item.shipping_amount}}</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td class="prc"><strong>Total</strong></td>
+            <td class="prc"><strong>{{=item.currency_symbol}}{{=item.shipping_amount+item_amount}}</strong></td>
+            <td><strong>&nbsp;{{=item.currency}}</strong></td>
+        </tr>
+    </table>
+    {{if seller.name:}}
+    <p><strong>Sold By</strong><br>
+    {{=seller.name}}</p>
+    {{pass}}
+    <p><strong>Shipping</strong><br>
+    {{=item.currency_symbol}}{{=item.shipping_amount}} {{=item.shipping_method_name}}</p>
+{{else:}}
+    Invalid item
+{{pass}}

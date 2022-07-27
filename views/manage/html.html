@@ -1,0 +1,15 @@
+{{extend 'layout_manage.html'}}
+
+<h2>HTML Snippets</h2>
+<h3>For Craigslist</h3>
+<textarea class="html-snippet">
+<table>{{for item in items:}}
+<tr><td>{{if item.image_thumb:}}<a href="{{=URL('default', 'item', args=item.slug, host='pricetack.com')}}"><img src="{{=URL('static', 'uploads', args=item.image_thumb, host='pricetack.com')}}"></a>{{pass}}</td><td><a href="{{=URL('default', 'item', args=item.slug, host='pricetack.com')}}">{{=item.title}}</a><br>{{=item.currency_symbol}}{{=item.current_price}} dropping to {{=item.currency_symbol}}{{=item.last_price}} on {{=item.last_date}}</td></tr><tr><td>&nbsp;</td></tr>
+{{pass}}</table>
+</textarea>
+<p>Copy and paste this HTML snippet into your Craigslist posting to include all of your items.<p>
+
+<p>&nbsp;</p>
+<h3>For Email Marketing</h3>
+<textarea class="html-snippet">Coming soon!</textarea>
+<p>Copy and paste this HTML snippet into your email campaign to show New Listings, Recent Price Changes and Expiring Listings.<p>

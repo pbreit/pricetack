@@ -1,0 +1,36 @@
+{{extend 'layout.html'}}
+
+<h2>Watchlist: {{=buyer_email or 'None'}}</h2>
+
+<p>&nbsp;</p>
+<table width="100%">
+    <thead>
+        <tr>
+            <th></th>
+            <th class="ttl">Description</th>
+            <th class="prc">Current Price</th>
+            <th class="prc">Final Price</th>
+        </tr>
+    </thead>
+    <tbody>
+    {{if len(items)==0:}}
+        <tr><td colspan=4 align=middle><br>No items</td></tr>
+    {{else:}}
+        {{for item in items:}}
+        <tr>
+            <td class="img">
+                <a href="{{=URL('default', 'item', args=item.item.slug)}}">
+                {{if len(item.item.image)==0:}}
+                    <img src="{{=URL('static','images/no-photo.png')}}" width="80">
+                {{else:}}
+                    <img src="{{=URL('static','uploads', args=item.item.image_thumb)}}" height="80">
+                {{pass}}</a>
+            </td>
+            <td class="ttl"><a href="{{=URL('default', 'item', args=item.item.slug)}}">{{=item.item.title}}</a></td>
+            <td class="prc"><b>{{=item.item.currency_symbol}}{{=item.item.current_price}}</b></td>
+            <td class="prc">{{if not item.item.hide_schedule:}}{{=item.item.currency_symbol}}{{=item.item.last_price}} on {{=item.item.last_date}}{{pass}}</td>
+        </tr>
+        {{pass}}
+    {{pass}}
+    </tbody>
+</table>

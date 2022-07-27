@@ -1,0 +1,103 @@
+{{extend 'layout.html'}}
+{{response.files.append('https://js.stripe.com/v1/')}}
+
+<h2>Checkout</h2>
+<div class="span-14 last">
+    {{=LOAD('components', 'order_summary.load', args=item.id, ajax=False)}}
+        <div id="user_form">
+            {{=form.custom.begin}}
+            <table>
+                <tr><td colspan="3"><p><label for="email">Email</label><br>
+                {{=form.custom.widget.email}}</p></td></tr>
+                <tr><td><p><label for="first_name">First Name</label><br>
+                {{=form.custom.widget.first_name}}</p></td>
+                <td colspan="2"><p><label for="last_name">Last Name</label><br>
+                {{=form.custom.widget.last_name}}</p></td></tr>
+                <tr><td colspan="3"><p><label for="street">Street</label><br>
+                {{=form.custom.widget.street}}</p></td></tr>
+                <tr><td><p><label for="city">City</label><br>
+                {{=form.custom.widget.city}}</p></td>
+                <td width="110"><p><label for="state">State / Province</label><br>
+                {{=form.custom.widget.state}}</p></td>
+                <td><p><label for="zip">Zip / Post Code</label><br>
+                {{=form.custom.widget.zip}}</p></td></tr>
+
+                <tr><td><p><label for="card_number">Credit Card Number</label><br>
+                <input type="text" maxlength="20" autocomplete="off" class="card-number stripe-sensitive required" /></p></td>
+
+                <td><p><label for="cvc">CVC</label><br>
+                <input type="text" maxlength="4" autocomplete="off" id="cvc" class="card-cvc stripe-sensitive required" /></p></td>
+
+                <td><p><label for="expiration">Expiration Date</label><br>
+                <div class="expiry-wrapper">
+                    <select class="card-expiry-month stripe-sensitive required">
+                    </select>
+                    <script type="text/javascript">
+                        var select = $(".card-expiry-month"),
+                            month = new Date().getMonth() + 1;
+                        for (var i = 1; i <= 12; i++) {
+                            select.append($("<option value='"+i+"' "+(month === i ? "selected" : "")+">"+i+"</option>"))
+                        }
+                    </script>
+                    <span> / </span>
+                    <select class="card-expiry-year stripe-sensitive required"></select>
+                    <script type="text/javascript">
+                        var select = $(".card-expiry-year"),
+                            year = new Date().getFullYear();
+
+                        for (var i = 0; i < 12; i++) {
+                            select.append($("<option value='"+(i + year)+"' "+(i === 0 ? "selected" : "")+">"+(i + year)+"</option>"))
+                        }
+                    </script>
+                    </p></td></tr>
+                </table>
+
+            <div class="checkout-with-paypal-btn">
+                <a href="{{=URL('checkout','cancel', args=item.id)}}">cancel</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <button class="btn" type="submit" name="submit-button">charge credit card ${{=item.current_price}}</button>
+            </div>
+            {{=form.custom.end}}
+        </div>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+</div>
+
+<script type="text/javascript">
+Stripe.setPublishableKey('pk_YOUR_PUBLISHABLE_KEY');
+
+$(document).ready(function() {
+
+    function submit(form) {
+
+        // given a valid form, submit the payment details to stripe
+        $(form['submit-button']).attr("disabled", "disabled")
+
+        Stripe.createToken({
+            number: $('.card-number').val(),
+            cvc: $('.card-cvc').val(),
+            exp_month: $('.card-expiry-month').val(), 
+            exp_year: $('.card-expiry-year').val()
+        }, 100, function(status, response) {
+            if (response.error) {
+                // re-enable the submit button
+                $(form['submit-button']).removeAttr("disabled")
+
+            } else {
+                // token contains id, last4, and card type
+                var token = response['id'];
+
+                // insert the stripe token
+                var input = $("<input name='stripeToken' value='" + token + "' style='display:none;' />");
+                form.appendChild(input[0])
+
+                // and submit
+                form.submit();
+            }
+        });
+
+        return false;
+    }
+});
+</script>
+
+<script>mpmetrics.track("Checkout");</script>

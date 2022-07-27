@@ -1,0 +1,33 @@
+# -*- coding: utf-8 -*- 
+
+db.define_table('purchase',
+    Field('item', db.item),
+    Field('status', default='pending'),
+    Field('amount', 'decimal(17,2)', default='0.0'),
+    Field('currency'),
+    Field('item_amount', 'decimal(17,2)', default='0.0'),
+    Field('shipping_amount', 'decimal(17,2)', default='0.0'),
+    Field('tax_amount', 'decimal(5,2)', default='0.0'),
+    Field('shipping_method', 'integer'),
+    Field('shipping_number'),
+    Field('payment_method'),
+    Field('payee_id'),
+    Field('payment_id'),
+    Field('name'),
+    Field('first_name'),
+    Field('last_name'),
+    Field('street'),
+    Field('street2'),
+    Field('city'),
+    Field('state'),
+    Field('zip'),
+    Field('country'),
+    Field('address_status'),
+    Field('email'),
+    Field('completed_on', 'datetime'),
+    Field('ship_date', 'datetime'),
+    Field('source', default=session.src, writable=False, readable=False),
+    Field('referer', default=session.referer, writable=False, readable=False),
+    record_signature)
+    
+db.purchase.status.requires = IS_IN_SET(['pending', 'new', 'shipped', 'abandoned'])

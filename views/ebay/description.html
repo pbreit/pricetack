@@ -1,0 +1,39 @@
+<link rel="stylesheet" href="{{=URL('static', 'css/blueprint/screen.css', host='pricetack.com')}}" type="text/css" media="screen, projection">
+<link rel="stylesheet" href="{{=URL('static', 'css/blueprint/screen.css', host='pricetack.com')}}" type="text/css" media="print">
+<link rel="stylesheet" href="{{=URL('static', 'css/styles.css', host='pricetack.com')}}" type="text/css" media="screen, projection">
+<div class="container">
+<div class="span-10" style="margin:20px 10px 20px 20px;">
+    <div class="item" itemscope itemtype="http://schema.org/Product">
+        <div class="item-images">
+        {{if item.image_display:}}
+            <img itemprop="image" src="{{=URL('static', 'uploads', args=item.image_display, host='pricetack.com')}}">
+        {{else:}}
+            <img src="{{=URL('static','images/no-photo.png', host='pricetack.com')}}" width="300">
+        {{pass}}</div>
+    </div>
+    <div class="item-description" itemprop="description">{{=XML(item.description, sanitize=True, permitted_tags=settings.xml_permitted_tags)}}</div>
+</div>
+<div class="span-10 last" style="margin:20px 20px 20px 10px;">
+    <h1 class="item-title" itemprop="name">{{=item.title}}</h1> 
+        <div class="item-price" itemprop="price">{{=item.currency_symbol}}{{=item.current_price}} <span class="currency-small">{{=item.currency}}</span></div>
+        <div class="item-qty">Only {{=item.quantity}} available</div>
+        <div class="item-pricecuts"><p>Future Pricecuts:&nbsp;&nbsp;<img src="{{=URL('static','images/help_icon.png', host='pricetack.com')}}"  width="15" title="The price of this item will automatically decrease on the dates listed. However the item may not be available if you wait."></p>
+        {{if len(item.prices)==0:}}
+            Final Price
+        {{else:}}
+            <ul>
+            {{for i in range(item.current_period + 1, len(item.prices)):}}
+            <li>{{=item.currency_symbol}}{{=item.prices[i]['amt']}} on <i>{{=item.prices[i]['long_date']}}</i></li>
+            {{pass}}
+            </ul>
+        {{pass}}
+        </div>
+    </div>
+<!-- item end -->
+<div class="span-20">To find more <a href="http://pricetack.com">Pricetack</a> items, add "t@ck" to your searches.</div>
+<div class="span-20" style="border:4px solid #ECECEC; padding:10px 10px 10px 10px; margin-top:20px;">
+<h3>Listed with <a href="http://pricetack.com">Pricetack</a> Automatic Markdowns - How It Works</h3>
+<p><img src="http://pricetack.com/init/static/images/only-service.png"></p>
+</div>
+<div class="span-20"><a href="http://pricetack.com">List your own falling price auction</a></div>
+</div><!-- container -->

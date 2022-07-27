@@ -1,0 +1,138 @@
+{{extend 'layout.html'}}
+{{block head_extension}}<meta property="og:title" content="{{=item.title}}" />
+<meta property="og:type" content="product" />
+<meta property="og:url" content="http://pricetack.com/item/{{=item.slug}}" />
+<meta property="og:image" content="{{if item.image_display:}}{{=URL('static','uploads', args=item.image_display, host='pricetack.com')}}{{else:}}{{=URL('static', 'images/no-photo.png', host='pricetack.com')}}{{pass}}" />
+<link rel="canonical" itemprop="url" href="http://pricetack.com/item/{{=item.slug}}" />
+{{response.meta.description = 'Price: %s%s   %s' % (item.currency_symbol, item.current_price, item.description[:265])}}{{end}}
+
+{{block left_sidebar}}
+    <p>&nbsp;</p>
+    <div class="groupings">
+        {{=LOAD('components','item_groupings.load', vars={'seller': get_seller()}, ajax=False)}}
+    </div>
+{{end}}
+
+<div class="span-10">
+    <div class="item" itemscope itemtype="http://schema.org/Product">
+        <div class="item-images">
+        {{if item.image_display:}}
+            <img itemprop="image" src="{{=URL('static', 'uploads', args=item.image_display)}}" alt="{{=item.title}}">
+        {{else:}}
+            <img src="{{=URL('static','images/no-photo.png')}}" width="300" alt="{{=item.title}}">
+        {{pass}}</div>
+    </div>
+    <div class="item-description" itemprop="description">{{=XML(item.description, sanitize=True,
+                    permitted_tags=settings.xml_permitted_tags)}}</div>
+</div>
+<div class="span-10 last">
+    <h1 class="item-title" itemprop="name">{{=item.title}}</h1>
+    <div class="item-seller">
+    {{if seller.name:}}
+    Sold by <a href="{{=URL('default', 'items', vars={'seller': seller.name})}}">{{=seller.name}}</a>
+    &nbsp;&nbsp;[ <a href="{{=URL('default', 'contact_seller', args=item.id)}}">{{='contact %s' % seller.name}}</a> ]
+    {{else:}}
+    <a href="{{=URL('default', 'index', vars={'seller': seller.id})}}">More items from seller</a>
+    [<a href="{{=URL('default', 'contact_seller', args=item.id)}}">contact seller</a>]
+    {{pass}}
+    {{if auth_service:}}<a href="http://myworld.ebay.com/{{=auth_service.username}}"><img src="//p.ebaystatic.com/aw/pics/logos/logoEbay_x45.gif" height="10"></a>{{pass}}
+    {{if seller.city and seller.state:}}<br>{{=seller.city}}, {{=seller.state}}{{pass}}</div>
+    {{if item.status=='active':}}
+        <div class="item-price" itemprop="price">{{=item.currency_symbol}}{{=item.current_price}} <span class="currency-small">{{=item.currency}}</span></div>
+        <div class="item-qty">{{if not item.hide_quantity:}}Only {{=item.quantity}} available{{pass}}</div>
+        <div class="buy-now-btn"><a href="{{=URL('checkout', 'add', args=[item.id])}}" class="btn">buy now for {{='%s%s' % (item.currency_symbol, item.current_price)}}</a></div>
+        <div class="item-pricecuts">{{if not item.hide_schedule:}}<p>Future Pricecuts:&nbsp;&nbsp;<img src="{{=URL('static','images/help_icon.png')}}"  width="15" title="The price of this item will automatically decrease on the dates listed. However the item may not be available if you wait."></p>
+        {{if len(item.prices)==0:}}
+            Final Price
+        {{else:}}
+            <ul>
+            {{for i in range(item.current_period + 1, len(item.prices)):}}
+                <li>{{=item.currency_symbol}}{{=item.prices[i]['amt']}} on <i>{{=item.prices[i]['long_date']}}</i></li>
+            {{pass}}
+            </ul>
+        {{pass}}
+        {{pass}}</div>
+        <div class="item-shipping"><p>
+            Shipping: {{=item.currency_symbol}}{{=item.shipping_amount}} {{=item.shipping_method_name}}</p>
+        {{if item.is_local:}}<p>
+            This item is available for local pickup. Please contact the seller to arrange payment and exchange.</p>{{pass}}
+        </div>
+        {{if item.seller==auth.user_id and item.grouping:}}
+            <div class="item-cat">Grouping: {{=item.grouping}}</div>
+        {{pass}}
+        <div class="item-watchlist">
+            {{if watching:}}
+                <a href="#" onclick="$('#notify').show('slow')">watching</a><br>
+            {{else:}}
+                <a href="#" onclick="$('#notify').show('slow')" id="watching">get notified of each price drop</a><br>
+            {{pass}}
+            <span id="notify" style="display: none">
+            Email: <input class="string" name="email" id="email" value="{{=buyer_email}}"> <a href=# onclick="save()">save</a></span>
+        </div>
+        {{else:}}
+            <p>Item not available</p>
+        {{pass}}
+        </div>
+        {{if auth_service and item.status=='active':}}
+            <p>eBay:
+            {{if listing:}}
+                <a href="http://cgi.ebay.com/{{=listing.ref_id}}">view</a> |
+                <a href="{{=URL('ebay', 'api', args=['revise', item.id])}}">revise</a> |
+                <a href="{{=URL('ebay', 'api', args=['cancel', item.id])}}">cancel</a>
+            {{else:}}
+                <a id="opener" href="#">list</a>
+            {{pass}}
+            </p>
+        {{pass}}
+        {{=seller_bar(session, item)}}
+</div>
+
+<script>
+
+$(function() {
+    $("#dialog-form").dialog({
+        autoOpen: false,
+        show: 'fade',
+        hide: 'fade',
+        modal: true,
+        resizable: false,
+        width: 200,
+        minHeight: 190,
+        buttons: {
+            "Close": function() { $(this).dialog("close"); },
+            "Ok": function() { window.location = "{{=URL('ebay', 'api', args=['list', item.id])}}?ebay_category=" + document.getElementById("ebay_category").value; }
+        }
+    });
+
+    $('#opener').click(function(e) {
+        e.preventDefault();
+        $dialog.dialog('open');
+    });
+});
+
+function save() {
+    if (isValidEmail(document.getElementById("email").value)) {
+        $.post("{{=URL('watchlist','add')}}", {item: '{{=item.id}}', email: document.getElementById("email").value});
+        $('#notify').hide('slow');
+        document.getElementById("watching").innerHTML = "watching";
+    } else {
+        alert('Invalid email address');
+    }
+}
+</script>
+
+<script type="text/javascript">
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = '//apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+</script>
+
+<div id="dialog-form" style="display: none;" title="Specify the Ebay category (ex: 123456)">
+    <form>
+    <label for="name">Ebay Category</label>
+    <input class="text" type="text" name="ebay_category" id="ebay_category" />
+    </form>
+    <a href="http://shop.ebay.com/allcategories/all-categories" target="_new">List of Ebay categories <img src="/static/images/new-window.jpg"></a>
+</div>

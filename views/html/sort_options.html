@@ -1,0 +1,22 @@
+{{if request.vars.sort=='newest':}}
+    <strong>newest</strong>
+    {{request.get_vars.sort = 'reduced'}}
+    | <a href="{{=URL(request.args(0), request.args(1), extension='', vars=request.get_vars)}}">reduced</a>
+    {{request.get_vars.sort = 'expiring'}}
+    | <a href="{{=URL(request.args(0), request.args(1), extension='', vars=request.get_vars)}}">expiring</a>
+    {{request.get_vars.sort = 'newest'}}
+{{elif request.vars.sort=='expiring':}}
+    {{request.get_vars.sort = 'newest'}}
+    <a href="{{=URL(request.args(0), request.args(1), extension='', vars=request.get_vars)}}">newest</a>
+    {{request.get_vars.sort = 'reduced'}}
+    | <a href="{{=URL(request.args(0), request.args(1), extension='', vars=request.get_vars)}}">reduced</a>
+    | <strong>expiring</strong>
+    {{request.get_vars.sort = 'expiring'}}
+{{else:}}
+    {{request.get_vars.sort = 'newest'}}
+    <a href="{{=URL(request.args(0), request.args(1), extension='', vars=request.get_vars)}}">newest</a>
+    | <strong>reduced</strong>
+    {{request.get_vars.sort = 'expiring'}}
+    | <a href="{{=URL(request.args(0), request.args(1), extension='', vars=request.get_vars)}}">expiring</a>
+    {{request.get_vars.sort = 'reduced'}}
+{{pass}}

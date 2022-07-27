@@ -1,0 +1,16 @@
+{{extend 'layout.html'}}
+
+<h2>Payment Completed</h2>
+
+<div class="span-14 last">
+    {{=LOAD('components','order_summary.load', args=item.id, ajax=False)}}
+
+    <p><strong>Status</strong><br>
+    {{=item.status.capitalize()}}</p>
+
+    <p><strong>Shipping Address</strong><br>
+    {{=purchase.name}}<br>
+    {{=purchase.street}}<br>
+    {{=purchase.city}}, {{=purchase.state}} {{=purchase.zip}}</br>
+    {{=purchase.country}}</p>
+</div>

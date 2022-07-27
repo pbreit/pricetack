@@ -1,0 +1,85 @@
+{{extend 'layout_manage.html'}}                                 
+
+{{if item:}}
+<h2>Edit Item: {{=item.title}}</h2>
+{{else:}}
+<h2>List An Item</h2>
+{{pass}}
+
+{{=form.custom.begin}}
+<div class="span-10">
+    <div class="item">
+        <div class="edit-item-images">
+            <p><label for="image">Image</label><br>
+                {{if request.vars.image_display:}}
+                    <img src="{{=URL('static', 'uploads', args=request.vars.image_display)}}">
+                {{pass}}
+                {{=form.custom.widget.image}}
+            </p>
+        </div>
+        <div class="edit-item-description">
+            <p><label for="description">Description</label><br>
+            {{=form.custom.widget.description}}</p>
+        </div>
+    </div>
+</div>
+<div class="span-10 last">
+    <div class="edit-item-title">
+        <p><label for="title">Item Title {{=required_field}}</label><br>
+        {{=form.custom.widget.title}}</p>
+    </div> 
+    <div class="edit-item-qty"><table><tr valign="middle"><td><label for="quantity">Quantity</label><br>
+    &nbsp;&nbsp;1<input type="hidden" name="quantity" value="1"></td>
+    <td><br>{{=form.custom.widget.hide_quantity}} Hide quantity</td></tr></table>
+    </div>
+    <div class="edit-item-price">
+        <p><label for="start_price">Starting Price {{=required_field}}</label><br>
+        {{=form.custom.widget.currency}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{=form.custom.widget.start_price}}</p>
+    </div>
+    <div class="edit-item-pricecuts">
+        <table><tr><td width="100px"><label for="quantity">Drops {{=required_field}}</label><br>
+        {{=form.custom.widget.drops}}</td>
+        <td width="120px"><label for="price_change">Price Change {{=required_field}}</label><br>
+        {{=form.custom.widget.price_change}}</td>
+        <td><label for="duration">Days {{=required_field}}</label><br>
+        {{=form.custom.widget.duration}}</td></tr></table>
+    </div>
+    <div class="edit-item-schedule">
+        <p>{{=form.custom.widget.hide_schedule}}
+        <label for="hide_schedule"></label>Hide price schedule from shoppers</p>
+    </div>
+    <div class="edit-item-shipping">        
+        <table><tr valign="top"><td><label for="shipping_amount">Shipping Cost</label><br>
+        {{=form.custom.widget.shipping_amount}}</td>
+        <td><label for="start_price">Shipping Method</label><br>
+        <select class="string" id="item_shipping_method" name="shipping_method">
+            {{for k,v in sorted(shipping_methods.items()):}}
+            <option value="{{=k}}"{{if k==shipping_method:}} selected{{pass}}>{{=v}}</option>
+            {{pass}}
+        </select>
+        </td></tr></table>
+    </div>
+    <div class="edit-item-local">
+        <p>{{=form.custom.widget.is_local}}
+        <label for="is_local"></label>Available for local pickup</p>
+    </div>
+    <div class="edit-item-relist">
+        <p>{{=form.custom.widget.auto_relist}}
+        <label for="auto_relist"></label>Automatically relist item if it doesn't sell</p>
+    </div>
+    <div class="edit-item-grouping">
+        <p><label for="grouping">Grouping</label> (for grouping items in your own store)<br>
+        {{=form.custom.widget.grouping}}</p>
+    </div>
+    <div><p><strong>{{=required_field}} required</strong></p>
+        <p><input type="submit" name="save" value="save item" /></p></div>
+    <div>PayPal payment account: {{=auth.user.paypal_email}}&nbsp;&nbsp;<a href="{{=URL('default', 'user', args='profile')}}">edit</a></div>
+</div>
+{{=form.custom.end}}
+
+<script src="/static/nicedit/nicEdit.js" type="text/javascript"></script> 
+<script>
+$(document).ready(function(){ 
+new nicEditor({iconsPath : '/static/nicedit/nicEditorIcons.gif', buttonList : ['bold','italic','underline']}).panelInstance('disabled_item_description'); 
+}); 
+</script>

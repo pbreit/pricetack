@@ -1,0 +1,27 @@
+{{extend 'layout.html'}}
+<h2>Input form</h2>
+{{=form}}
+<h2>Items to Import</h2>
+{{if reader:}}
+    <table>
+        <tr>
+            <th>Item</th>
+            <th>Ref</th>
+            <th>Category</th>
+            <th>Price</th>
+            <th>Description</th>
+            <th>Image URL</th>
+        </tr>
+        {{for row in reader:}}
+        <tr>
+            <td>{{=row['Title'][:25]}}</td>
+            <td>{{=row['Variant SKU']}}</td>
+            <td>{{=row['Type'][:25]}}</td>
+            <td>{{=row['Variant Price']}}</td>
+            <td>{{='%s...%s' % (row['Body (HTML)'][:15], row['Body (HTML)'][-15:])}}</td>
+            <td>{{='%s...%s' % (row['Image Src'][:12], row['Image Src'][-12:])}}</td>
+        </tr>
+        {{pass}}
+    </table>
+    {{=import_form}}
+{{pass}}

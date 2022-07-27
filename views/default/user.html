@@ -1,0 +1,142 @@
+{{extend 'layout.html'}}
+
+{{block header}} <!-- this is default header -->
+    <div class="span-12">
+        <div id="logo">{{=A(IMG(_src=URL('static','images/logo-beta.png'), _width='283', _height='62'), _href=URL('default', 'index'))}}</div>
+    </div>
+    <div class="span-12 last">
+        <div id="auth_navbar">{{try:}}{{=user_bar()}}{{except:pass}}</div>
+    </div>
+{{end}}
+
+{{if request.args(0)=='login':}}
+    <h2>Login</h2>
+    <div id="user_form">
+        {{=form.custom.begin}}
+        <p><label for="email">Email</label><br>
+        {{=form.custom.widget.email}}</p>
+        <p><label for="password">Password</label><br>
+        {{=form.custom.widget.password}}</p>
+        <p><input class="checkbox" id="auth_user_remember" name="remember" type="checkbox" value="on" checked />&nbsp;&nbsp;<label for="auth_user_remember">Remember me</label></p>
+        <p><input type="submit" value="login" /></p>
+        {{=form.custom.end}}
+    <br/><a href="{{=URL(r=request,args='register')}}">register</a>
+    <br/><a href="{{=URL(r=request,args='request_reset_password')}}">password help</a>
+    </div>
+{{elif request.args(0)=='register':}}
+    <h2>Register</h2>
+    <div class="span-10">
+        <div id="user_form">
+            {{=form.custom.begin}}
+            <p><label for="email">Email</label><br>
+            {{=form.custom.widget.email}}</p>
+            <p><label for="password">Password</label><br>
+            {{=form.custom.widget.password}}</p>
+            <p><label for="password_two">Repeat Password</label><br>
+            {{=form.custom.widget.password_two}}</p>
+            <p><label for="name">Store Address (optional)</label><br>
+            pricetack.com/store/ {{=form.custom.widget.name}}</p>
+            <p><input type="submit" value="register" /></p>
+            {{=form.custom.end}}
+        </div>
+    </div>
+    <div class="span-10 last">
+        <p><strong>Prices decrease until items sell</strong><br>
+            Using Pricetack's unique selling format, prices automatically decline until the item sells.</p>
+        <p><strong>Great for new and preowned items</strong><br>
+            Use Pricetack to move unsold inventory, niche goods and items from your closet or garage.</p>
+        <p><strong>Integrate into your online store</strong><br>
+            Customize your header to link seamlessly with your existing online store. For example: <a href="http://cheekob.pricetack.com">cheekob.pricetack.com</a></p>
+        <p><strong>No listing fees</strong><br>
+            5% + $0.50 closing fee on completed sales.</p>
+        <p><strong>No fees in 2016!</strong><br>
+            Register now and pay no fees in 2016.</p>
+    </div>
+{{elif request.args(0)=='profile':}}
+    <h2>Profile</h2>
+    <div id="user_form">
+        {{=form.custom.begin}}
+        <table>
+            <tr><td colspan="3"><p><label for="email">Email</label><br>
+            {{=form.custom.widget.email}}&nbsp;&nbsp;Also your login!</p></td></tr>
+            <tr><td colspan="3"><p><label for="phone">Phone</label><br>
+            {{=form.custom.widget.phone}}</p></td></tr>
+            <tr><td width="220"><p><label for="first_name">First Name</label><br>
+            {{=form.custom.widget.first_name}}</p></td>
+            <td colspan="2"><p><label for="last_name">Last Name</label><br>
+            {{=form.custom.widget.last_name}}</p></td></tr>
+            <tr><td colspan="3"><p><label for="street">Street</label><br>
+            {{=form.custom.widget.street}}</p></td></tr>
+            <tr><td><p><label for="city">City</label><br>
+            {{=form.custom.widget.city}}</p></td>
+            <td width="110"><p><label for="state">State / Province</label><br>
+            {{=form.custom.widget.state}}</p></td>
+            <td><p><label for="zip">Zip / Post Code</label><br>
+            {{=form.custom.widget.zip}}</p></td></tr>
+            <tr><td colspan="3"><p><label for="country">Country</label><br>
+            {{=form.custom.widget.country}}</p></td></tr>
+        </table>
+        <table>
+            <tr><td colspan="3"><p><label for="business_name">Business Name</label><br>
+            {{=form.custom.widget.business_name}}</p></td></tr>
+            <tr><td colspan="3"><p><label for="paypal_email">PayPal Email Address</label><br>
+            {{=form.custom.widget.paypal_email}}&nbsp;&nbsp;Buyer payments will be sent to this PayPal account - <a href="https://www.paypal.com/us/mrb/pal=B3M7VBWJNY7AC" target="_new">Sign up for PayPal</a></p></td></tr>
+            <tr><td colspan="3"><p><label for="name">Store Address / Seller Nickname</label><br>
+            http:// {{=form.custom.widget.name}} .pricetack.com</p></td></tr>
+            <tr><td colspan="3"><p><label for="header">Store Custom Header</label><br>
+            {{=form.custom.widget.header}}</p></td></tr>
+        </table>
+        <table>
+            <tr><td colspan="3"><p><input type="submit" value="save profile" /></td></tr>
+        </table>
+        {{=form.custom.end}}
+    </div>
+{{elif request.args(0)=='request_reset_password':}}
+    <h2>Reset Password</h2>
+    <div id="user_form">
+        {{=form.custom.begin}}
+        <p><label for="auth_user_email" id="auth_user_email__label">Email: </label><br>
+        {{=form.custom.widget.email}}</p>
+        <p><input type="submit" value="reset password" /></p>
+        {{=form.custom.end}}
+    </div>
+{{elif request.args(0)=='change_password':}}
+    <h2>Change Password</h2>
+    <div id="user_form">
+        {{=form.custom.begin}}
+        <p><label for="email">Old Password</label><br>
+        {{=form.custom.widget.old_password}}</p>
+        <p><label for="password">New Password</label><br>
+        {{=form.custom.widget.new_password}}</p>
+        <p><label for="password">Repeat New Password</label><br>
+        {{=form.custom.widget.new_password2}}</p>
+        <p><input type="submit" value="save new password" /></p>
+        {{=form.custom.end}}
+    </div>
+{{elif request.args(0)=='verify_email':}}
+    <div id="user_form">
+        {{=form.custom.begin}}
+        <p><label for="email">Email</label><br>
+        <input type="text" class="text string" name="email" id="auth_user_email" value=""></p>
+        <p><label for="password">Password</label><br>
+        <input type="password" class="text string" name="password" id="auth_user_password" value=""></p>
+        <p><label for="password_two">Repeat Password</label><br>
+        <input type="password" class="text string" name="password_two" id="auth_user_password_twp" value=""></p>
+        <p><label for="name">Store Address</label><br>
+        http:// <input type="text" class="text string" name="name" id="auth_user_name" value=""> .pricetack.com</p>
+        {{=form.custom.submit}}
+        {{=form.custom.end}}
+    </div>
+{{elif request.args(0)=='impersonate':}}
+    <div id="user_form">
+    {{=form}}
+    </div>
+{{else:}}
+    <div id="user_form">
+    {{=form}}
+    </div>
+{{pass}}
+
+<script language="javascript">
+jQuery("#user_form input:visible:enabled:first").focus();
+</script>

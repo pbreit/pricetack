@@ -1,0 +1,7 @@
+{{extend 'layout.html'}}
+
+{{if request.args(0)=='return':}}
+    Twitter Name: {{=screen_name}}
+{{else:}}
+    <a href="{{=URL('connect', 'twitter', args='authorize')}}">Authorize Twitter</a>
+{{pass}}

@@ -1,0 +1,19 @@
+{{if item.item:}}
+    {{if len(item.item.prices)==0:}}
+        Final Price
+    {{else:}}
+        {{for i in range(item.item.current_period + 1, len(item.item.prices)):}}
+            {{if i > 1:}}<br>{{pass}}
+            {{=item.item.currency_symbol}}{{=item.item.prices[i]['amt']}} on <i>{{=item.item.prices[i]['long_date']}}</i>
+        {{pass}}
+    {{pass}}
+{{else:}}
+    {{if len(item.prices)==0:}}
+        Final Price
+    {{else:}}
+        {{for i in range(item.current_period + 1, len(item.prices)):}}
+            {{if i > 1:}}<br>{{pass}}
+            {{=item.currency_symbol}}{{=item.prices[i]['amt']}} on <i>{{=item.prices[i]['long_date']}}</i>
+        {{pass}}
+    {{pass}}
+{{pass}}

@@ -1,0 +1,13 @@
+{{extend 'layout_email_text.html'}}{{import socket}}Thank you for registering for Pricetack, the falling price marketplace.
+
+To list an item for sale:
+{{='http://%s.%s/manage/item' % (socket.gethostname(), 'pricetack.com')}}
+
+To set up a custom header, URL and PayPal email address for your store:
+{{='http://%s.%s/user/profile' % (socket.gethostname(), 'pricetack.com')}}
+
+If you have any questions, please feel free to contact us:
+{{='http://%s.%s/support' % (socket.gethostname(), 'pricetack.com')}}
+
+Pricetack Team
+http://pricetack.com

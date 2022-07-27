@@ -1,0 +1,12 @@
+{{extend 'layout.html'}}
+
+<a href="{{=URL('call', args='GeteBayOfficialTime')}}">GeteBayOfficialTime</a><br>
+<a href="{{=URL('call', args='AddItem')}}">AddItem</a><br>
+<a href="{{=URL('ebay', 'enable_notifications')}}">enable_notifications</a><br>
+
+<form method=get action=/ebay/get_categories>
+    DetailLevel: <input name=DetailLevel value=ReturnAll size=10>
+    LevelLimt: <input name=LevelLimit value=1 size=1>
+    ViewAllNodes: <input name=ViewAllNodes value=True size=3>
+    <input type=submit value=GetCategories>
+</form>

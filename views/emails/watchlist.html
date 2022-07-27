@@ -1,0 +1,6 @@
+{{extend 'layout_email_text.html'}}{{import socket}}Upcoming pricecut on an item you are watching:
+
+{{=item.title}}
+{{='http://%s.%s/item/%s' % (socket.gethostname(), 'pricetack.com', item.id)}}
+
+{{=item.currency_symbol}}{{=item.prices[item.current_period+1]['amt']}} on: {{=item.prices[item.current_period+1]['long_date']}}

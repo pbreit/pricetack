@@ -1,0 +1,32 @@
+{{extend 'layout.html'}}
+
+<div class="span-14">
+<h2>Help</h2>
+
+<h3>Frequently Asked Questions</h3>
+<ul class="faq">
+<li class="faq"><strong>Where can I learn more?</strong><br>
+<a href="{{=URL('default', 'learn_more')}}">Learn more</a></li>
+<li class="faq"><strong>What are the fees to use this service?</strong><br>
+There are currently no fees to use the service. In the future we expect to charge sellers a small fee on completed sales.</li>
+<li class="faq"><strong>What payment options are offered?</strong><br>
+Buyers pay sellers directly through PayPal. <a href="https://www.paypal.com/us/mrb/pal=B3M7VBWJNY7AC" target="_new">Sign up for PayPal</a>.</li>
+</ul>
+
+<h3>Email Support</h3>
+<p>Please feel free to contact us: <a href="mailto:support@pricetack.com">support@pricetack.com</a>
+
+<script type="text/javascript">
+  (function() {
+    var uv = document.createElement('script'); uv.type = 'text/javascript'; uv.async = true;
+    uv.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'widget.uservoice.com/zCLGnENLH0S0gbE9w8NWFA.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(uv, s);
+  })();
+</script>
+
+<!-- <script type="text/javascript" charset="utf-8">
+  var is_ssl = ("https:" == document.location.protocol);
+  var asset_host = is_ssl ? "https://s3.amazonaws.com/getsatisfaction.com/" : "http://s3.amazonaws.com/getsatisfaction.com/";
+  document.write(unescape("%3Cscript src='" + asset_host + "javascripts/feedback-v2.js' type='text/javascript'%3E%3C/script%3E"));
+</script> -->
+</div>

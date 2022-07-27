@@ -1,0 +1,17 @@
+{{extend 'layout.html'}}
+
+{{block left_sidebar}}
+<p>&nbsp;</p>
+<p>items<br>
+<a href="{{=URL('manage', 'items', args='active')}}">active</a><br>
+<a href="{{=URL('manage', 'items', args='sold')}}">sold</a><br>
+<a href="{{=URL('manage', 'items', args='expired')}}">expired</a><br>
+<a href="{{=URL('manage', 'items', args='canceled')}}">canceled</a></p>
+<p>orders<br>
+<a href="{{=URL('manage', 'orders', args='new')}}">new</a><br>
+<a href="{{=URL('manage', 'orders', args='shipped')}}">shipped</a></p>
+<p>tools<br>
+<a href="{{=URL('manage', 'html')}}">html</a></p>
+{{end}}
+
+{{include}}

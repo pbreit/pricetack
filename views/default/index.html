@@ -1,0 +1,25 @@
+{{extend 'layout.html'}}
+
+<div class="span-20 last">
+<h1 style="font-weight: bold; color: #444; font-size: 26px;">&nbsp;The world's first automatic markdown ecommerce service</h1><p><a href="{{=URL('default', 'user', args='register')}}"><img src="{{=URL('static', 'images/only-service.png')}}" height="159" width="679"></a></p>
+</div>
+
+<div class="span-20 last" style="background-color: #ECECEC;">
+<br>
+<center><h3><a class="btn cta-btn" href="{{=URL('default', 'user', args='register')}}">&nbsp;free registration&nbsp;</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="{{=URL('learn-more')}}">learn more</a></h3></center>
+</div>
+
+<div class="span-20 last">
+<p>&nbsp;</p>
+
+<h3>Featured Sellers</h3>
+
+<ul class="listings">
+{{for item in items:}}
+    {{include './html/item_box.html'}}
+{{pass}}
+</ul>
+</div>
+<div class="span-20 last">
+<p>&nbsp;</p>
+</div>

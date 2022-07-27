@@ -1,0 +1,5 @@
+{{import socket}}{{=reply_to}} has a question about "{{=item.title}}":
+
+{{=message}}
+
+{{='http://%s.%s/item/%s' % (socket.gethostname(), 'pricetack.com', item.id)}}

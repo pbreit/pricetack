@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<!-- paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/ -->
+<!--[if lt IE 9]>      <html class="no-js oldie" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="{{=T.accepted_language or 'en'}}"> <!--<![endif]-->
+  <head>
+    <meta charset="utf-8" />	  	
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>{{=response.title or request.application}}</title>	
+    <meta name="google-site-verification" content="ZAH8NIjE-MwwFZsAXP7eTP1C-ReuO14f90WrVpPNuVI">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    {{block head_extension}}{{end}}
+    <link rel="shortcut icon" href="{{=URL('static','favicon.ico')}}" type="image/x-icon">
+    <link rel="apple-touch-icon" href="{{=URL('static','favicon.png')}}">
+    <link rel="stylesheet" media="handheld" href="{{=URL('static','css/handheld.css')}}">
+    <script data-cfasync="true" src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.0.6/modernizr.min.js"></script>
+    <link rel="stylesheet" href="{{=URL('static', 'css/blueprint/screen.css')}}" type="text/css" media="screen, projection">
+    <link rel="stylesheet" href="{{=URL('static', 'css/blueprint/screen.css')}}" type="text/css" media="print">	
+    <!--[if lt IE 8]><link rel="stylesheet" href="{{=URL('static', 'css/blueprint/ie.css')}}" type="text/css" media="screen, projection"><![endif]-->
+
+    {{
+        response.files.append(URL('static','js/javascript.js'))
+        response.files.append(URL('static','css/styles.css'))
+    }}
+
+    {{include 'web2py_ajax.html'}}
+    
+     <!-- Quantcast Tag, part 1 --> 
+    <script type="text/javascript">
+      var _qevents = _qevents || [];
+
+      (function() {
+       var elem = document.createElement('script');
+
+       elem.src = (document.location.protocol == "https:" ? "https://secure" : "http://edge") + ".quantserve.com/quant.js";
+       elem.async = true;
+       elem.type = "text/javascript";
+       var scpt = document.getElementsByTagName('script')[0];
+       scpt.parentNode.insertBefore(elem, scpt);  
+      })();
+    </script>
+
+  </head>
+<body>
+
+{{include}}
+
+<!-- Google Analytics -->
+<script>
+    var _gaq=[["_setAccount","UA-21594089-1"],["_trackPageview"]];
+    (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];g.async=1;
+    g.src=("https:"==location.protocol?"//ssl":"//www")+".google-analytics.com/ga.js";
+    s.parentNode.insertBefore(g,s)}(document,"script"));
+</script>
+
+<!-- SnapEngage -->
+<script type="text/javascript">
+document.write(unescape("%3Cscript src='" + ((document.location.protocol=="https:")?"https://snapabug.appspot.com":"http://www.snapengage.com") + "/snapabug.js' type='text/javascript'%3E%3C/script%3E"));</script><script type="text/javascript">
+SnapABug.init("479ca70e-641a-4d38-b13b-1e516c302039");
+SnapABug.allowOffline(false);
+{{if auth.user and auth.user.email:}}SnapABug.setUserEmail('{{=auth.user.email}}');{{pass}}
+</script>
+
+<!-- Woopra -->
+<script type="text/javascript">
+    var woo_settings = {idle_timeout:'300000', domain:'pricetack.com'};
+    (function(){
+        var wsc = document.createElement('script');
+        wsc.src = document.location.protocol+'//static.woopra.com/js/woopra.js';
+        wsc.type = 'text/javascript';
+        wsc.async = true;
+        var ssc = document.getElementsByTagName('script')[0];
+        ssc.parentNode.insertBefore(wsc, ssc);
+    })();
+</script>
+
+<!-- bug herd
+<script type="text/javascript">
+    var _bugHerdAPIKey = '3e5c00e6-ee9f-4fa9-b2d5-34d1bbd5d311';
+    (function (d, t) {
+        var bh = d.createElement(t), s = d.getElementsByTagName(t)[0];
+        bh.type = 'text/javascript';
+        bh.src = "//www.bugherd.com/bugherd.js?s=" + (new Date()).getTime();
+        s.parentNode.insertBefore(bh, s);
+    })(document, 'script');
+</script> -->
+
+<!-- reinvigorate -->
+<script type="text/javascript">
+document.write(unescape("%3Cscript src='" + (("https:" == document.location.protocol) ? "https://ssl-" : "http://")
++ "include.reinvigorate.net/re_.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+reinvigorate.track("3tk0o-um6fao5286");
+} catch(err) {}
+</script>
+
+<!-- gosquared -->
+<script type="text/javascript">
+    var GoSquared={};
+    GoSquared.acct = "GSN-832070-E";
+    (function(w){
+        function gs(){
+            w._gstc_lt=+(new Date); var d=document;
+            var g = d.createElement("script"); g.type = "text/javascript"; g.async = true; g.src = "//d1l6p2sc9645hc.cloudfront.net/tracker.js";
+            var s = d.getElementsByTagName("script")[0]; s.parentNode.insertBefore(g, s);
+        }
+        w.addEventListener?w.addEventListener("load",gs,false):w.attachEvent("onload",gs);
+    })(window);
+</script>
+
+<!-- lucky oragne -->
+<script type='text/javascript'>
+
+	(function() {
+		var wa = document.createElement('script'); wa.type = 'text/javascript'; wa.async = true;
+		wa.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://ca32935') + '.luckyorange.com/w.js';
+		var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(wa, s);
+	  })();
+	</script>
+
+<!-- Quantcast Tag, part 2 -->
+<script type="text/javascript">
+_qevents.push( { qacct:"p-a1xoRnplUaSP6"} );
+</script>
+<noscript>
+<div style="display: none;"><img src="//pixel.quantserve.com/pixel/p-a1xoRnplUaSP6.gif" height="1" width="1" alt="Quantcast"/></div>
+</noscript>
+
+<!-- getclicky.com -->
+<script type="text/javascript">
+var clicky_site_ids = clicky_site_ids || [];
+clicky_site_ids.push(58785);
+(function() {
+  var s = document.createElement('script');
+  s.type = 'text/javascript';
+  s.async = true;
+  s.src = '//static.getclicky.com/js';
+  ( document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0] ).appendChild( s );
+})();
+</script>
+
+<noscript>
+<div style="display:none;">
+<img src="//pixel.quantserve.com/pixel/p-a1xoRnplUaSP6.gif" border="0" height="1" width="1" alt="Quantcast"/>
+</div>
+</noscript>
+<!-- End Quantcast tag -->
+
+<script type="text/javascript">
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+</script>
+
+<p>{{if request.is_local:}}{{=response.toolbar()}}{{pass}}</p>
+
+  </body>
+</html>

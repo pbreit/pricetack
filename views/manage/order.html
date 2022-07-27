@@ -1,0 +1,31 @@
+{{extend 'layout_manage.html'}}
+
+<h2>Order Summary</h2>
+
+<div class="span-14 last">
+{{=LOAD('components', 'order_summary.load', args=row.purchase.item, ajax=False)}}
+
+<p><strong>Status</strong><br>
+{{=row.item.status.capitalize()}}
+{{if row.item.status=='shipped':}}
+    &nbsp;&nbsp;[<a href="http://www.google.com/search?q={{=row.purchase.shipping_number}}">{{=row.purchase.shipping_number}}</a>]
+{{pass}}
+{{if row.item.status=='sold':}}
+    <div id="user_form">
+        {{=form.custom.begin}}
+        <table><tr>
+            <td><input type="submit" value="change status to shipped" /></td>
+            <td><label for="purchase_shipping_number" id="purchase_shipping_number">Tracking (optional):&nbsp;&nbsp;&nbsp;</label>
+            {{=form.custom.widget.shipping_number}}</td>
+        </tr></table>
+        {{=form.custom.end}}
+    </div>
+{{pass}}
+</p>
+
+<p><strong>Buyer</strong><br>
+{{=row.purchase.name}}<br>
+{{=row.purchase.street}}<br>
+{{=row.purchase.city}}, {{=row.purchase.state}} {{=row.purchase.zip}}</br>
+{{=row.purchase.country}}</p>
+</div>

@@ -1,0 +1,8 @@
+{{extend 'layout_email_html.html'}}
+{{import socket}}
+
+<p>Congratulations, you have made a purchase!</p>
+
+{{=LOAD('components', 'order_summary.load', args=item.id, ajax=False)}}
+
+<p>{{=A('Item Information', _href='http://%s.%s%s' % (socket.gethostname(), 'pricetack.com', URL('default', 'item', args=item.id)))}}</p>
